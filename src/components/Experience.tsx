@@ -5,9 +5,9 @@ import Section from "./Section";
 export default function Experience() {
   return (
     <Section
-      id="experiencia"
-      title="Experiencia Laboral"
-      subtitle="Trayectoria"
+      id="experience"
+      title="Work Experience"
+      subtitle="Career"
     >
       <ol className="relative border-l border-line">
         {experience.map((job, index) => (
@@ -23,7 +23,15 @@ export default function Experience() {
               <p className="mb-2 text-sm font-semibold tracking-wide text-accent uppercase">
                 {job.position}
               </p>
-              <p className="max-w-2xl text-muted">{job.description}</p>
+              <p className="mb-3 max-w-2xl text-muted">{job.description}</p>
+              <ul className="max-w-2xl space-y-2">
+                {job.items.map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-muted">
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </MotionReveal>
           </li>
         ))}

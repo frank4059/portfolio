@@ -1,77 +1,51 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { tools } from "@/data";
 import MotionReveal from "./MotionReveal";
-import Section from "./Section";
 
 export default function Tools() {
-  const marquee = [...tools, ...tools];
-
   return (
-    <Section id="herramientas" title="Herramientas" subtitle="Mi stack creativo">
-      <div className="mb-14 overflow-hidden border-y border-line py-4">
-        <motion.div
-          className="flex w-max gap-10"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{
-            duration: 24,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        >
-          {marquee.map((tool, index) => (
-            <span
-              key={`${tool.name}-${index}`}
-              className="font-display text-2xl whitespace-nowrap text-muted uppercase"
-            >
-              {tool.name}
-            </span>
-          ))}
-        </motion.div>
-      </div>
+    <section id="tools" className="scroll-mt-24 py-20">
+      <MotionReveal>
+        <div className="mb-4">
+          <div className="text-center">
+            <p className="mb-2 text-xs font-semibold tracking-[0.25em] text-muted uppercase">
+              My creative stack
+            </p>
+            <h2 className="text-5xl tracking-tight text-foreground uppercase md:text-7xl">
+              Tools
+            </h2>
+          </div>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {tools.map((tool, index) => (
-          <MotionReveal key={tool.name} delay={index * 0.08}>
-            <div
-              className="group relative overflow-hidden rounded-3xl border border-line p-6 transition-colors"
-              style={{
-                background: `linear-gradient(150deg, ${tool.color}14 0%, transparent 60%)`,
-              }}
-            >
-              <div className="flex items-center justify-between">
-                <span
-                  className="flex h-16 w-16 items-center justify-center rounded-full font-display text-xl"
-                  style={{ backgroundColor: tool.color, color: "#ffffff" }}
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-6 md:gap-8">
+            {tools.map((tool) => (
+              <div key={tool.name} className="group relative">
+                <motion.button
+                  type="button"
+                  aria-label={tool.name}
+                  whileHover={{ scale: 1.1, y: -4 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-white shadow-sm md:h-20 md:w-20"
                 >
-                  <motion.span
-                    animate={{ rotateY: [0, 360] }}
-                    transition={{
-                      duration: 8,
-                      repeat: Infinity,
-                      ease: "linear",
-                    }}
-                    style={{ display: "inline-block" }}
-                  >
-                    {tool.short}
-                  </motion.span>
+                  <Image
+                    src={tool.logo!}
+                    alt={tool.name}
+                    width={80}
+                    height={80}
+                    className="h-full w-full object-cover"
+                  />
+                </motion.button>
+                <span className="pointer-events-none absolute top-full left-1/2 mt-2 -translate-x-1/2 translate-y-1 whitespace-nowrap rounded-full border border-line bg-background px-3 py-1 text-xs font-semibold tracking-wide uppercase opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100">
+                  {tool.name}
                 </span>
-                <span
-                  className="h-2 w-2 rounded-full"
-                  style={{ backgroundColor: tool.color }}
-                />
               </div>
-              <h3 className="mt-6 text-xl font-bold">{tool.name}</h3>
-              <p className="mt-1 text-sm text-muted">{tool.description}</p>
-              <div
-                className="absolute inset-x-0 bottom-0 h-1 origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100"
-                style={{ backgroundColor: tool.color }}
-              />
-            </div>
-          </MotionReveal>
-        ))}
-      </div>
-    </Section>
+            ))}
+          </div>
+        </div>
+      </MotionReveal>
+    </section>
   );
 }

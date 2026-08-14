@@ -16,13 +16,13 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Frank Sarmiento | Video Editor",
   description:
-    "Portfolio de Frank Sarmiento — editor de video y diseñador. Motion graphics, contenido corto y diseño gráfico.",
+    "Portfolio of Frank Sarmiento — video editor and designer. Motion graphics, short-form content and graphic design.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="es"
+      lang="en"
       className={`${archivoBlack.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>

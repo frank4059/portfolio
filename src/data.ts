@@ -3,11 +3,11 @@ export const profile = {
   shortName: "Frank Sarmiento",
   role: "Video Editor",
   title: "Portfolio 2026 | Video Editor",
-  location: "San Vicente y las Granadinas",
+  location: "Saint Vincent and the Grenadines",
   description:
-    "Editor de video autodidacta con más de 5 años de experiencia creando contenido que capta la atención desde el primer segundo. Me especializo en edición de video, motion graphics y diseño — dominando Premiere Pro, After Effects, Photoshop y Blender para llevar cada proyecto del concepto al resultado final. Mi enfoque: ritmo, narrativa y detalles que hacen la diferencia.",
-  birthDate: "30 de diciembre de 1996",
-  education: "Autodidacta",
+    "Self-taught video editor with 5+ years of experience creating content that grabs attention from the very first second. I specialize in video editing, motion graphics and design — mastering Premiere Pro, After Effects, Photoshop and Blender to take every project from concept to final result. My focus: pacing, storytelling and details that make the difference.",
+  birthDate: "December 30, 1996",
+  education: "Self-taught",
   email: "frankssleyva@gmail.com",
   instagram: "@frank_editions",
   instagramUrl: "https://www.instagram.com/frank_editions/",
@@ -17,10 +17,10 @@ export const profile = {
   stats: {
     likes: "1.2K",
     views: "38.5K",
-    publishDate: "12 de agosto de 2026",
+    publishDate: "August 12, 2026",
   },
   tools: ["After Effects", "Photoshop", "Premiere Pro", "Blender"],
-  fields: ["Edición", "Diseño Gráfico", "Gráficos en Movimiento"],
+  fields: ["Editing", "Graphic Design", "Motion Graphics"],
 };
 
 export type Job = {
@@ -28,36 +28,43 @@ export type Job = {
   period: string;
   position: string;
   description: string;
+  items: string[];
 };
 
 export const experience: Job[] = [
   {
-    company: "Putih Agency",
-    period: "2025 — Actualidad",
-    position: "Editor de Video Senior",
+    company: "DigiKagency",
+    period: "Mar 2026 — Jul 2026",
+    position: "Contract Video Editor & Motion Designer",
     description:
-      "Dirección de la edición de campañas para clientes de moda y lifestyle. Creación de motion graphics de marca y supervisión del flujo de post-producción del equipo.",
+      "Contract work for international clients across social media and advertising campaigns.",
+    items: [
+      "Accelerated production turnaround by 25% by streamlining post-production workflows and developing reusable motion graphics templates for recurring social media campaigns.",
+      "Maximized multi-platform performance for international clients by adapting pacing, typography, animation, aspect ratios, and brand guidelines across vertical and horizontal formats.",
+    ],
   },
   {
-    company: "KPURI",
-    period: "2023 — 2025",
-    position: "Editor de Video",
+    company: "The Keyes Company",
+    period: "Aug 2025 — Feb 2026",
+    position: "Contract Video Editor & Motion Designer",
     description:
-      "Edición de contenido de formato corto para redes sociales. Corte y organización de clips, ajuste de música y ritmo para maximizar la retención del espectador.",
+      "Corporate and promotional video production for the Florida, USA real estate market.",
+    items: [
+      "Drove a 35% increase in website engagement and organic reach by conceptualizing, editing, and animating 3 high-impact corporate and promotional video projects.",
+      "Enhanced financial and real estate market communication for investors and buyers by integrating animated data visualizations, custom motion graphics, and clean visual hierarchy.",
+    ],
   },
   {
-    company: "Kasoem Group",
-    period: "2022 — 2023",
-    position: "Diseñador Gráfico y Editor",
+    company: "Creative Studio Melisa Medel",
+    period: "2022 — 2025",
+    position: "Video Editor & Motion Graphics Specialist",
     description:
-      "Diseño de activos visuales para campañas de producto: carteles, miniaturas y piezas para redes. Soporte en la edición de video corporativo.",
-  },
-  {
-    company: "The Biker Shop",
-    period: "2021 — 2022",
-    position: "Fotógrafo y Editor Junior",
-    description:
-      "Producción de fotografía y video para catálogo y redes sociales. Edición de reels promocionales y retoque fotográfico de producto.",
+      "Branding and marketing content for diverse client identities, delivered under tight deadlines.",
+    items: [
+      "Increased average watch time by 40% across client campaigns by implementing retention-focused pacing, kinetic typography, custom transitions, visual effects, and sound design.",
+      "Produced 150+ vertical and horizontal video assets for branding and marketing campaigns while enforcing strict visual standards across diverse client brand identities.",
+      "Translated strategic briefs into platform-optimized content for YouTube, social media, and corporate distribution under tight deadlines and remote feedback cycles.",
+    ],
   },
 ];
 
@@ -75,13 +82,13 @@ export const projects: Project[] = [
   {
     id: "motion-graphic",
     title: "Motion Graphic",
-    tag: "Gráficos en Movimiento",
+    tag: "Motion Graphics",
     description:
-      "Animación de gráficos para redes sociales y uso comercial. Juego con tipografía, formas y ritmo para construir identidad visual en movimiento.",
+      "Graphic animation for social media and commercial use. Playing with typography, shapes and pacing to build a visual identity in motion.",
     items: [
-      "Tipografía animada",
-      "Formas y transiciones",
-      "Animación para redes y comerciales",
+      "Animated typography",
+      "Shapes and transitions",
+      "Animation for socials and commercials",
     ],
     color: "#7c3aed",
     cover: "/placeholders/project-motion.png",
@@ -89,13 +96,13 @@ export const projects: Project[] = [
   {
     id: "short-content",
     title: "Short Content",
-    tag: "Contenido Corto",
+    tag: "Short Form",
     description:
-      "Edición de contenido para Reels y TikTok. Corte y organización de clips, ajuste de canciones y video para capturar la atención del espectador.",
+      "Editing content for Reels and TikTok. Cutting and organizing clips, syncing songs and video to capture the viewer's attention.",
     items: [
-      "Reels y TikTok",
-      "Corte y organización de clips",
-      "Ajuste de música y ritmo",
+      "Reels and TikTok",
+      "Cutting and organizing clips",
+      "Music and pacing adjustment",
     ],
     color: "#f59e0b",
     cover: "/placeholders/project-short.png",
@@ -103,13 +110,13 @@ export const projects: Project[] = [
   {
     id: "graphic-design",
     title: "Graphic Design",
-    tag: "Diseño Gráfico",
+    tag: "Graphic Design",
     description:
-      "Diseño de activos visuales: carteles, miniaturas y piezas de marca. Composición, jerarquía y consistencia de marca en cada entrega.",
+      "Design of visual assets: posters, thumbnails and brand pieces. Composition, hierarchy and brand consistency in every deliverable.",
     items: [
-      "Carteles y miniaturas",
-      "Composición y jerarquía",
-      "Consistencia de marca",
+      "Posters and thumbnails",
+      "Composition and hierarchy",
+      "Brand consistency",
     ],
     color: "#0891b2",
     cover: "/placeholders/project-design.png",
@@ -121,6 +128,7 @@ export type Tool = {
   short: string;
   color: string;
   description: string;
+  logo?: string;
 };
 
 export const tools: Tool[] = [
@@ -128,71 +136,42 @@ export const tools: Tool[] = [
     name: "After Effects",
     short: "AE",
     color: "#9999FF",
-    description: "Motion graphics y composición",
+    description: "Motion graphics and compositing",
+    logo: "/iconos/after-effects.svg",
   },
   {
     name: "Photoshop",
     short: "PS",
     color: "#31A8FF",
-    description: "Retoque y diseño de imagen",
+    description: "Photo retouching and image design",
+    logo: "/iconos/photoshop.svg",
+  },
+  {
+    name: "Illustrator",
+    short: "AI",
+    color: "#FF9A00",
+    description: "Vector design and illustration",
+    logo: "/iconos/illustrator.svg",
   },
   {
     name: "Premiere Pro",
     short: "PR",
     color: "#9999FF",
-    description: "Edición de video",
+    description: "Video editing",
+    logo: "/iconos/premiere-pro.svg",
   },
   {
-    name: "DaVinci Resolve",
-    short: "DR",
-    color: "#F26F21",
-    description: "Colorización y acabado",
+    name: "CapCut",
+    short: "CC",
+    color: "#34E1FF",
+    description: "Quick edits for social media",
+    logo: "/iconos/capcut.svg",
   },
   {
     name: "Blender",
     short: "BL",
     color: "#E87D0D",
-    description: "Modelado 3D y animación",
-  },
-];
-
-export type Comment = {
-  id: number;
-  name: string;
-  date: string;
-  text: string;
-  avatarColor: string;
-  replies?: { name: string; date: string; text: string; avatarColor: string }[];
-};
-
-export const initialComments: Comment[] = [
-  {
-    id: 1,
-    name: "Rizky Pratama",
-    date: "3 de agosto de 2026",
-    text: "El reel de motion graphics quedó increíble. La animación de tipografía está muy limpia, felicitaciones!",
-    avatarColor: "#7c3aed",
-    replies: [
-      {
-        name: "Quennel Damairo",
-        date: "4 de agosto de 2026",
-        text: "Gracias Rizky! Fue un proyecto en el que trabajé mucho el timing.",
-        avatarColor: "#0a0a0a",
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: "Sinta Wulandari",
-    date: "28 de julio de 2026",
-    text: "Me encanta la selección de colores en el diseño gráfico. Gran consistencia de marca.",
-    avatarColor: "#0891b2",
-  },
-  {
-    id: 3,
-    name: "Andi Saputra",
-    date: "15 de julio de 2026",
-    text: "Los cortes del short content para TikTok están en otro nivel. Cuántos clips editaste en ese proyecto?",
-    avatarColor: "#f59e0b",
+    description: "3D modeling and animation",
+    logo: "/iconos/blender.svg",
   },
 ];

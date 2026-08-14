@@ -1,9 +1,8 @@
 import GlassNav from "@/components/GlassNav";
 import About from "@/components/About";
-import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
 import Tools from "@/components/Tools";
-import Comments from "@/components/Comments";
+import Experience from "@/components/Experience";
 
 export default function Home() {
   return (
@@ -13,10 +12,9 @@ export default function Home() {
       <div className="mx-auto flex w-full max-w-6xl flex-1 px-6 pt-16">
         <main className="min-w-0 flex-1">
           <About />
-          <Experience />
           <Projects />
           <Tools />
-          <Comments />
+          <Experience />
         </main>
       </div>
 
@@ -25,7 +23,7 @@ export default function Home() {
           <p>
             © {new Date().getFullYear()} Frank Sarmiento · Video Editor
           </p>
-          <p>Edición · Diseño Gráfico · Motion Graphics</p>
+          <p>Editing · Graphic Design · Motion Graphics</p>
         </div>
       </footer>
     </div>

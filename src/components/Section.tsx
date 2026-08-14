@@ -7,6 +7,9 @@ type SectionProps = {
   subtitle?: string;
   children: ReactNode;
   className?: string;
+  align?: "left" | "center";
+  titleClassName?: string;
+  headingClassName?: string;
 };
 
 export default function Section({
@@ -15,15 +18,22 @@ export default function Section({
   subtitle,
   children,
   className,
+  align = "left",
+  titleClassName,
+  headingClassName,
 }: SectionProps) {
   return (
     <section id={id} className={`scroll-mt-24 py-20 ${className ?? ""}`}>
       <MotionReveal>
-        <div className="mb-12">
+        <div
+          className={`${align === "center" ? "text-center" : ""} ${headingClassName ?? "mb-12"}`}
+        >
           <p className="mb-2 text-xs font-semibold tracking-[0.25em] text-muted uppercase">
             {subtitle}
           </p>
-          <h2 className="text-4xl tracking-tight text-foreground uppercase md:text-5xl">
+          <h2
+            className={`text-4xl tracking-tight text-foreground uppercase md:text-5xl ${titleClassName ?? ""}`}
+          >
             {title}
           </h2>
         </div>

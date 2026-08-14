@@ -1,16 +1,33 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { profile } from "@/data";
 
 const links = [
-  { label: "Inicio", href: "#sobre-mi" },
-  { label: "Sobre mí", href: "#sobre-mi" },
-  { label: "Experiencia", href: "#experiencia" },
-  { label: "Proyectos", href: "#proyectos" },
-  { label: "Herramientas", href: "#herramientas" },
-  { label: "Comentarios", href: "#comentarios" },
+  { label: "About", href: "#about" },
+  { label: "Experience", href: "#experience" },
+  { label: "Projects", href: "#projects" },
+  { label: "Tools", href: "#tools" },
+];
+
+const contactLinks = [
+  {
+    label: "Email",
+    href: `mailto:${profile.email}`,
+    icon: "/iconos/email.svg",
+  },
+  {
+    label: "Instagram",
+    href: profile.instagramUrl,
+    icon: "/iconos/instagram.svg",
+  },
+  {
+    label: "WhatsApp",
+    href: profile.whatsappUrl,
+    icon: "/iconos/whatsapp.svg",
+  },
 ];
 
 export default function GlassNav() {
@@ -38,37 +55,81 @@ export default function GlassNav() {
             : "border-white/30 bg-white/50 backdrop-blur-md"
         }`}
       >
-        <a href="#sobre-mi" className="flex items-center gap-2">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-foreground font-display text-sm text-background">
-            FS
-          </span>
+        <motion.a
+          href="#about"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.98 }}
+          transition={{ type: "spring", stiffness: 400, damping: 17 }}
+          className="flex items-center gap-2"
+        >
+          <Image
+            src="/frank-logo.svg"
+            alt="Frank Editions logo"
+            width={48}
+            height={48}
+            className="h-12 w-12"
+          />
           <span className="font-display text-lg tracking-tight uppercase">
-            {profile.shortName}
+            Frank Editions
           </span>
-        </a>
+        </motion.a>
 
-        <div className="hidden items-center gap-1 md:flex">
+                <div className="hidden items-center gap-1 md:flex">
           {links.map((link) => (
-            <a
+            <motion.a
               key={link.label}
               href={link.href}
+              whileHover={{ scale: 1.1, y: -4 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
               className="rounded-full px-4 py-2 text-sm font-medium whitespace-nowrap text-foreground/70 transition-colors hover:bg-white/60 hover:text-foreground"
             >
               {link.label}
-            </a>
+            </motion.a>
           ))}
         </div>
 
-        <a
+        <div className="hidden items-center gap-3 md:flex">
+          {contactLinks.map((item) => (
+            <motion.a
+              key={item.label}
+              href={item.href}
+              aria-label={item.label}
+              target={item.href.startsWith("http") ? "_blank" : undefined}
+              rel={
+                item.href.startsWith("http")
+                  ? "noopener noreferrer"
+                  : undefined
+              }
+              whileHover={{ scale: 1.2, y: -6 }}
+              whileTap={{ scale: 0.9 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              className="flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-white/60"
+            >
+              <Image
+                src={item.icon}
+                alt=""
+                width={24}
+                height={24}
+                className="h-6 w-6 drop-shadow-sm"
+              />
+            </motion.a>
+          ))}
+        </div>
+
+        <motion.a
           href={`mailto:${profile.email}`}
+          whileHover={{ scale: 1.08, y: -3 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ type: "spring", stiffness: 400, damping: 17 }}
           className="hidden h-10 items-center rounded-full bg-foreground px-5 text-sm font-semibold text-background transition-opacity hover:opacity-85 md:flex"
         >
-          Contáctame
-        </a>
+          Contact me
+        </motion.a>
 
         <button
           onClick={() => setOpen((prev) => !prev)}
-          aria-label={open ? "Cerrar menú" : "Abrir menú"}
+          aria-label={open ? "Close menu" : "Open menu"}
           className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded-xl transition-colors hover:bg-white/60 md:hidden"
         >
           <motion.span
@@ -96,22 +157,55 @@ export default function GlassNav() {
             className="absolute top-full mt-3 w-[calc(100%-2rem)] max-w-6xl rounded-2xl border border-white/40 bg-white/80 p-3 shadow-lg shadow-black/5 backdrop-blur-xl md:hidden"
           >
             {links.map((link) => (
-              <a
+              <motion.a
                 key={link.label}
                 href={link.href}
                 onClick={() => setOpen(false)}
+                whileHover={{ scale: 1.05, x: 4 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 className="block rounded-xl px-4 py-3 text-sm font-medium text-foreground/80 transition-colors hover:bg-white/70"
               >
                 {link.label}
-              </a>
+              </motion.a>
             ))}
-            <a
+            <div className="mt-2 flex items-center justify-center gap-4 border-t border-white/40 pt-3">
+              {contactLinks.map((item) => (
+                <motion.a
+                  key={item.label}
+                  href={item.href}
+                  aria-label={item.label}
+                  target={item.href.startsWith("http") ? "_blank" : undefined}
+                  rel={
+                    item.href.startsWith("http")
+                      ? "noopener noreferrer"
+                      : undefined
+                  }
+                  whileHover={{ scale: 1.2, y: -6 }}
+                  whileTap={{ scale: 0.9 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  className="flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-white/70"
+                >
+                  <Image
+                    src={item.icon}
+                    alt=""
+                    width={24}
+                    height={24}
+                    className="h-6 w-6 drop-shadow-sm"
+                  />
+                </motion.a>
+              ))}
+            </div>
+            <motion.a
               href={`mailto:${profile.email}`}
               onClick={() => setOpen(false)}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
               className="mt-2 block rounded-xl bg-foreground px-4 py-3 text-center text-sm font-semibold text-background"
             >
-              Contáctame
-            </a>
+              Contact me
+            </motion.a>
           </motion.div>
         )}
       </AnimatePresence>
