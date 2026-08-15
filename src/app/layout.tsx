@@ -3,8 +3,7 @@ import { Archivo_Black, Inter } from "next/font/google";
 import "./globals.css";
 import { profile } from "@/data";
 
-// TODO: cambiar por tu dominio real una vez publicado
-const SITE_URL = "https://frank-editions.vercel.app";
+const SITE_URL = "https://portfolio-lyart-six-33.vercel.app";
 
 const archivoBlack = Archivo_Black({
   variable: "--font-display",
