@@ -39,7 +39,7 @@ export default function Hoverable({
     timer.current = window.setTimeout(() => setActive(false), hold);
   };
 
-  const transition = { type: "spring", stiffness: 400, damping: 17 } as const;
+  const transition = { type: "spring", stiffness: 200, damping: 17 } as const;
   const animate = active ? hover : { scale: 1, y: 0, x: 0 };
 
   if (href) {

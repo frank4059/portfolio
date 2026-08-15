@@ -27,6 +27,7 @@ export default function Tools() {
                   aria-label={tool.name}
                   hover={{ scale: 1.1, y: -4 }}
                   tap={{ scale: 0.95 }}
+                  hold={0}
                   className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-white shadow-sm md:h-20 md:w-20"
                 >
                   <Image

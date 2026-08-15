@@ -59,6 +59,7 @@ export default function GlassNav() {
           href="#about"
           hover={{ scale: 1.05 }}
           tap={{ scale: 0.98 }}
+          hold={0}
           className="flex items-center gap-2"
         >
           <Image
@@ -81,6 +82,7 @@ export default function GlassNav() {
               href={link.href}
               hover={{ scale: 1.1, y: -4 }}
               tap={{ scale: 0.95 }}
+              hold={0}
               className="rounded-full px-4 py-2 text-sm font-medium whitespace-nowrap text-foreground/70 transition-colors hover:bg-white/60 hover:text-foreground"
             >
               {link.label}
@@ -102,6 +104,7 @@ export default function GlassNav() {
               }
               hover={{ scale: 1.2, y: -6 }}
               tap={{ scale: 0.9 }}
+              hold={0}
               className="flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-white/60"
             >
               <Image
@@ -119,6 +122,7 @@ export default function GlassNav() {
           href={`mailto:${profile.email}`}
           hover={{ scale: 1.08, y: -3 }}
           tap={{ scale: 0.95 }}
+          hold={0}
           className="hidden h-10 items-center rounded-full bg-foreground px-5 text-sm font-semibold text-background transition-opacity hover:opacity-85 md:flex"
         >
           Contact me
@@ -159,6 +163,7 @@ export default function GlassNav() {
                 href={link.href}
                 hover={{ scale: 1.05, x: 4 }}
                 tap={{ scale: 0.97 }}
+                hold={0}
                 onClick={() => setOpen(false)}
                 className="block rounded-xl px-4 py-3 text-sm font-medium text-foreground/80 transition-colors hover:bg-white/70"
               >
@@ -179,6 +184,7 @@ export default function GlassNav() {
                   }
                   hover={{ scale: 1.2, y: -6 }}
                   tap={{ scale: 0.9 }}
+                  hold={0}
                   className="flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-white/70"
                 >
                   <Image
@@ -195,6 +201,7 @@ export default function GlassNav() {
               href={`mailto:${profile.email}`}
               hover={{ scale: 1.03 }}
               tap={{ scale: 0.97 }}
+              hold={0}
               onClick={() => setOpen(false)}
               className="mt-2 block rounded-xl bg-foreground px-4 py-3 text-center text-sm font-semibold text-background"
             >

@@ -2,6 +2,7 @@ import GlassNav from "@/components/GlassNav";
 import About from "@/components/About";
 import Projects from "@/components/Projects";
 import Tools from "@/components/Tools";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -17,10 +18,19 @@ export default function Home() {
       </div>
 
       <footer className="border-t border-line">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-6 py-8 text-xs text-muted sm:flex-row">
-          <p>
-            © {new Date().getFullYear()} Frank Sarmiento · Video Editor
-          </p>
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-8 text-xs text-muted sm:flex-row">
+          <div className="flex items-center gap-3">
+            <Image
+              src="/frank-logo.svg"
+              alt="Frank Editions logo"
+              width={32}
+              height={32}
+              className="h-8 w-8"
+            />
+            <span className="font-display text-base tracking-tight text-foreground uppercase">
+              Frank Editions
+            </span>
+          </div>
           <p>Editing · Graphic Design · Motion Graphics</p>
         </div>
       </footer>

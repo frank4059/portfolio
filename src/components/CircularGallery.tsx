@@ -237,6 +237,7 @@ interface MediaProps {
   textColor: string;
   borderRadius?: number;
   font?: string;
+  itemScale: number;
 }
 
 class Media {
@@ -254,6 +255,7 @@ class Media {
   textColor: string;
   borderRadius: number;
   font?: string;
+  itemScale: number;
   isVideo: boolean = false;
   videoTexture: Texture | null = null;
   videoElement: HTMLVideoElement | null = null;
@@ -288,7 +290,8 @@ class Media {
     bend,
     textColor,
     borderRadius = 0,
-    font
+    font,
+    itemScale = 1
   }: MediaProps) {
     this.geometry = geometry;
     this.gl = gl;
@@ -303,6 +306,7 @@ class Media {
     this.textColor = textColor;
     this.borderRadius = borderRadius;
     this.font = font;
+    this.itemScale = itemScale;
     this.createShader();
     this.createMesh();
     this.createTitle();
@@ -383,11 +387,9 @@ class Media {
       const video = document.createElement("video");
       video.src = this.image;
       video.crossOrigin = "anonymous";
-      video.muted = true;
       video.loop = true;
       video.playsInline = true;
       video.setAttribute("playsinline", "");
-      video.setAttribute("muted", "");
       video.preload = "none";
       this.videoElement = video;
       const onReady = () => {
@@ -501,14 +503,18 @@ class Media {
       this.extra += this.widthTotal;
       this.isBefore = this.isAfter = false;
     }
+    if (this.videoElement && !this.videoElement.paused && (this.isBefore || this.isAfter)) {
+      this.videoElement.pause();
+    }
   }
 
   onResize({ screen, viewport }: { screen?: ScreenSize; viewport?: Viewport } = {}) {
     if (screen) this.screen = screen;
     if (viewport) this.viewport = viewport;
     this.scale = this.screen.height / 1500;
-    this.plane.scale.y = (this.viewport.height * (1000 * this.scale)) / this.screen.height;
-    this.plane.scale.x = this.plane.scale.y * (1080 / 1440);
+    const heightFactor = 1.1;
+    this.plane.scale.y = ((this.viewport.height * (1325 * this.scale)) / this.screen.height) * this.itemScale * heightFactor;
+    this.plane.scale.x = this.plane.scale.y * ((1080 / 1440) / heightFactor);
     this.baseScaleX = this.plane.scale.x;
     this.baseScaleY = this.plane.scale.y;
     this.plane.program.uniforms.uPlaneSizes.value = [this.plane.scale.x, this.plane.scale.y];
@@ -529,6 +535,7 @@ interface AppConfig {
   scrollEase?: number;
   autoPlay?: boolean;
   autoSpeed?: number;
+  itemScale?: number;
 }
 
 class App {
@@ -568,6 +575,7 @@ class App {
   mouse: { x: number; y: number } | null = null;
   autoPlay: boolean;
   autoSpeed: number;
+  itemScale: number;
 
   constructor(
     container: HTMLElement,
@@ -580,13 +588,15 @@ class App {
       scrollSpeed = 2,
       scrollEase = 0.05,
       autoPlay = true,
-      autoSpeed = 0.02
+      autoSpeed = 0.02,
+      itemScale = 1
     }: AppConfig
   ) {
     this.container = container;
     this.scrollSpeed = scrollSpeed;
     this.autoPlay = autoPlay;
     this.autoSpeed = autoSpeed;
+    this.itemScale = itemScale;
     this.scroll = { ease: scrollEase, current: 0, target: 0, last: 0 };
     this.onCheckDebounce = debounce(this.onCheck.bind(this), 200);
     this.createRenderer();
@@ -594,7 +604,7 @@ class App {
     this.createScene();
     this.onResize();
     this.createGeometry();
-    this.createMedias(items, bend, textColor, borderRadius, font);
+    this.createMedias(items, bend, textColor, borderRadius, font, this.itemScale);
     const stripWidth = this.medias[0].width * this.medias.length;
     this.scroll = { ease: scrollEase, current: stripWidth / 2, target: stripWidth / 2, last: stripWidth / 2 };
     this.update();
@@ -634,7 +644,8 @@ class App {
     bend: number = 1,
     textColor: string,
     borderRadius: number,
-    font: string
+    font: string,
+    itemScale: number
   ) {
     this.mediasImages = items.concat(items);
     this.medias = this.mediasImages.map((data, index) => {
@@ -651,7 +662,8 @@ class App {
         bend,
         textColor,
         borderRadius,
-        font
+        font,
+        itemScale
       });
     });
   }
@@ -730,6 +742,11 @@ class App {
         Math.abs(px - x) < media.plane.scale.x / 2 &&
         Math.abs(media.plane.position.y - y) < media.plane.scale.y / 2
       ) {
+        this.medias.forEach(other => {
+          if (other !== media && other.videoElement && !other.videoElement.paused) {
+            other.videoElement.pause();
+          }
+        });
         media.togglePlay();
         return;
       }
@@ -834,6 +851,7 @@ interface CircularGalleryProps {
   scrollEase?: number;
   autoPlay?: boolean;
   autoSpeed?: number;
+  itemScale?: number;
 }
 
 export default function CircularGallery({
@@ -846,7 +864,8 @@ export default function CircularGallery({
   scrollSpeed = 2,
   scrollEase = 0.05,
   autoPlay = true,
-  autoSpeed = 0.02
+  autoSpeed = 0.02,
+  itemScale = 1
 }: CircularGalleryProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -864,14 +883,15 @@ export default function CircularGallery({
         scrollSpeed,
         scrollEase,
         autoPlay,
-        autoSpeed
+        autoSpeed,
+        itemScale
       });
     });
     return () => {
       isMounted = false;
       if (app) app.destroy();
     };
-  }, [items, bend, textColor, borderRadius, font, fontUrl, scrollSpeed, scrollEase, autoPlay, autoSpeed]);
+  }, [items, bend, textColor, borderRadius, font, fontUrl, scrollSpeed, scrollEase, autoPlay, autoSpeed, itemScale]);
   return (
     <div
       className="w-full h-full overflow-hidden cursor-grab active:cursor-grabbing"
