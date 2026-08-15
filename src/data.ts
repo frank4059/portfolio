@@ -6,19 +6,12 @@ export const profile = {
   location: "Saint Vincent and the Grenadines",
   description:
     "Self-taught video editor with 5+ years of experience creating content that grabs attention from the very first second. I specialize in video editing, motion graphics and design — mastering Premiere Pro, After Effects, Photoshop and Blender to take every project from concept to final result. My focus: pacing, storytelling and details that make the difference.",
-  birthDate: "December 30, 1996",
-  education: "Self-taught",
   email: "frankssleyva@gmail.com",
   instagram: "@frank_editions",
   instagramUrl: "https://www.instagram.com/frank_editions/",
   whatsapp: "+1 784 497 7662",
   whatsappUrl: "https://wa.me/17844977662",
   photoUrl: "/frank2.png",
-  stats: {
-    likes: "1.2K",
-    views: "38.5K",
-    publishDate: "August 12, 2026",
-  },
   tools: ["After Effects", "Photoshop", "Premiere Pro", "Blender"],
   fields: ["Editing", "Graphic Design", "Motion Graphics"],
 };

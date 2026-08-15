@@ -796,7 +796,6 @@ class App {
     this.boundOnClick = this.onClick.bind(this);
 
     window.addEventListener("resize", this.boundOnResize);
-    window.addEventListener("mousewheel", this.boundOnWheel);
     window.addEventListener("wheel", this.boundOnWheel);
     window.addEventListener("mousemove", this.boundOnMouseMove);
     window.addEventListener("mousedown", this.boundOnTouchDown);
@@ -817,7 +816,6 @@ class App {
   destroy() {
     window.cancelAnimationFrame(this.raf);
     window.removeEventListener("resize", this.boundOnResize);
-    window.removeEventListener("mousewheel", this.boundOnWheel);
     window.removeEventListener("wheel", this.boundOnWheel);
     window.removeEventListener("mousemove", this.boundOnMouseMove);
     window.removeEventListener("mousedown", this.boundOnTouchDown);
