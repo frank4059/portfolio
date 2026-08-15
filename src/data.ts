@@ -95,7 +95,7 @@ export const projects: Project[] = [
   },
   {
     id: "short-content",
-    title: "Short Content",
+    title: "Social Content",
     tag: "Short Form",
     description:
       "Editing content for Reels and TikTok. Cutting and organizing clips, syncing songs and video to capture the viewer's attention.",
@@ -131,47 +131,127 @@ export type Tool = {
   logo?: string;
 };
 
+export type Works = {
+  id: string;
+  title: string;
+  caption: string;
+  media: string;
+  type: "video" | "image";
+  color: string;
+};
+
+export const works: Works[] = [
+  {
+    id: "tu-marca-en-movimiento",
+    title: "Tu marca en movimiento",
+    caption:
+      "Tu marca sigue quieta? Las animaciones aumentan retención, mejoran el recuerdo de marca y hacen que tu contenido destaque.",
+    media: "/works/projects-1.mp4",
+    type: "video",
+    color: "#7c3aed",
+  },
+  {
+    id: "reel-1",
+    title: "Reel",
+    caption: "Motion reel.",
+    media: "/works/projects-2.mp4",
+    type: "video",
+    color: "#f59e0b",
+  },
+  {
+    id: "reel-2",
+    title: "Reel",
+    caption: "Motion reel.",
+    media: "/works/projects-3.mp4",
+    type: "video",
+    color: "#0891b2",
+  },
+  {
+    id: "reel-3",
+    title: "Reel",
+    caption: "Motion reel.",
+    media: "/works/projects-4.mp4",
+    type: "video",
+    color: "#7c3aed",
+  },
+  {
+    id: "reel-4",
+    title: "Reel",
+    caption: "Motion reel.",
+    media: "/works/projects-5.mp4",
+    type: "video",
+    color: "#f59e0b",
+  },
+  {
+    id: "socal-dumpsters",
+    title: "SoCal Dumpsters",
+    caption:
+      "Bringing brands to life - frame by frame. A custom identity in motion for SoCal Dumpsters LLC.",
+    media: "/works/projects-6.mp4",
+    type: "video",
+    color: "#0891b2",
+  },
+  {
+    id: "keyes-case-study",
+    title: "Keyes Case Study",
+    caption:
+      "Case Study: Video & Motion Design for the launch of Keyes' new real estate website.",
+    media: "/works/projects-7.mp4",
+    type: "video",
+    color: "#7c3aed",
+  },
+  {
+    id: "keyes-case-study-2",
+    title: "Keyes Case Study",
+    caption:
+      "Case Study: Video & Motion Design for the launch of Keyes' new real estate website.",
+    media: "/works/projects-8.mp4",
+    type: "video",
+    color: "#f59e0b",
+  },
+];
+
 export const tools: Tool[] = [
   {
     name: "After Effects",
     short: "AE",
     color: "#9999FF",
     description: "Motion graphics and compositing",
-    logo: "/iconos/after-effects.svg",
+    logo: "/iconos/after-effects-2.svg",
   },
   {
     name: "Photoshop",
     short: "PS",
     color: "#31A8FF",
     description: "Photo retouching and image design",
-    logo: "/iconos/photoshop.svg",
+    logo: "/iconos/photoshop-2.svg",
   },
   {
     name: "Illustrator",
     short: "AI",
     color: "#FF9A00",
     description: "Vector design and illustration",
-    logo: "/iconos/illustrator.svg",
+    logo: "/iconos/illustrator-2.svg",
   },
   {
     name: "Premiere Pro",
     short: "PR",
     color: "#9999FF",
     description: "Video editing",
-    logo: "/iconos/premiere-pro.svg",
+    logo: "/iconos/premiere-pro-2.svg",
   },
   {
     name: "CapCut",
     short: "CC",
     color: "#34E1FF",
     description: "Quick edits for social media",
-    logo: "/iconos/capcut.svg",
+    logo: "/iconos/capcut-2.svg",
   },
   {
     name: "Blender",
     short: "BL",
     color: "#E87D0D",
     description: "3D modeling and animation",
-    logo: "/iconos/blender.svg",
+    logo: "/iconos/blender-2.svg",
   },
 ];

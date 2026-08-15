@@ -2,7 +2,6 @@ import GlassNav from "@/components/GlassNav";
 import About from "@/components/About";
 import Projects from "@/components/Projects";
 import Tools from "@/components/Tools";
-import Experience from "@/components/Experience";
 
 export default function Home() {
   return (
@@ -14,7 +13,6 @@ export default function Home() {
           <About />
           <Projects />
           <Tools />
-          <Experience />
         </main>
       </div>
 

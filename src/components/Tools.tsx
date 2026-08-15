@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Image from "next/image";
+import Hoverable from "./Hoverable";
 import { tools } from "@/data";
 import MotionReveal from "./MotionReveal";
 
@@ -22,12 +22,11 @@ export default function Tools() {
           <div className="mt-10 flex flex-wrap items-center justify-center gap-6 md:gap-8">
             {tools.map((tool) => (
               <div key={tool.name} className="group relative">
-                <motion.button
+                <Hoverable
                   type="button"
                   aria-label={tool.name}
-                  whileHover={{ scale: 1.1, y: -4 }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  hover={{ scale: 1.1, y: -4 }}
+                  tap={{ scale: 0.95 }}
                   className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-white shadow-sm md:h-20 md:w-20"
                 >
                   <Image
@@ -37,7 +36,7 @@ export default function Tools() {
                     height={80}
                     className="h-full w-full object-cover"
                   />
-                </motion.button>
+                </Hoverable>
                 <span className="pointer-events-none absolute top-full left-1/2 mt-2 -translate-x-1/2 translate-y-1 whitespace-nowrap rounded-full border border-line bg-background px-3 py-1 text-xs font-semibold tracking-wide uppercase opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100">
                   {tool.name}
                 </span>

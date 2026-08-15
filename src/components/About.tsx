@@ -3,9 +3,9 @@ import { profile } from "@/data";
 import MotionReveal from "./MotionReveal";
 
 const contactIcons: Record<string, string> = {
-  Email: "/iconos/email.svg",
-  Instagram: "/iconos/instagram.svg",
-  WhatsApp: "/iconos/whatsapp.svg",
+  Email: "/iconos/email-2.svg",
+  Instagram: "/iconos/instagram-2.svg",
+  WhatsApp: "/iconos/whatsapp-2.svg",
 };
 
 const contactLinks = [
@@ -40,6 +40,7 @@ export default function About() {
               width={853}
               height={846}
               sizes="640px"
+              loading="eager"
               className="h-auto w-full"
             />
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-72 bg-[linear-gradient(to_top,rgba(255,255,255,1)_0%,rgba(255,255,255,0.9)_20%,rgba(255,255,255,0.6)_50%,rgba(255,255,255,0.3)_75%,rgba(255,255,255,0)_100%)]" />
@@ -54,7 +55,7 @@ export default function About() {
           </MotionReveal>
 
           <MotionReveal delay={0.25}>
-            <div className="rounded-2xl border border-line p-4">
+            <div className="rounded-2xl border border-white/40 bg-white/50 p-4 shadow-lg shadow-black/5 backdrop-blur-xl">
               <div className="grid gap-3 sm:grid-cols-3">
                 {contactLinks.map((item) => (
                   <a

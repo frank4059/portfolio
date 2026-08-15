@@ -254,6 +254,9 @@ class Media {
   textColor: string;
   borderRadius: number;
   font?: string;
+  isVideo: boolean = false;
+  videoTexture: Texture | null = null;
+  videoElement: HTMLVideoElement | null = null;
   program!: Program;
   plane!: Mesh;
   scale!: number;
@@ -261,7 +264,14 @@ class Media {
   width!: number;
   widthTotal!: number;
   x!: number;
-  lift: number = 0;
+  baseScaleX: number = 0;
+  baseScaleY: number = 0;
+  hoverScale: number = 1;
+  hoverY: number = 0;
+  hoverScaleVel: number = 0;
+  hoverYVel: number = 0;
+  lastFrameTime: number = 0;
+  lastHoverTime: number = 0;
   isBefore: boolean = false;
   isAfter: boolean = false;
 
@@ -300,9 +310,11 @@ class Media {
   }
 
   createShader() {
+    this.isVideo = /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(this.image);
     const texture = new Texture(this.gl, {
-      generateMipmaps: true
+      generateMipmaps: !this.isVideo
     });
+    this.videoTexture = this.isVideo ? texture : null;
     this.program = new Program(this.gl, {
       depthTest: false,
       depthWrite: false,
@@ -359,13 +371,40 @@ class Media {
       },
       transparent: true
     });
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.src = this.image;
-    img.onload = () => {
-      texture.image = img;
-      this.program.uniforms.uImageSizes.value = [img.naturalWidth, img.naturalHeight];
-    };
+    if (this.isVideo) {
+      const poster = new Image();
+      poster.crossOrigin = "anonymous";
+      poster.src = this.image.replace(/\.(mp4|webm|ogg|mov)(\?.*)?$/i, "-poster.jpg");
+      poster.onload = () => {
+        texture.image = poster;
+        texture.needsUpdate = true;
+        this.program.uniforms.uImageSizes.value = [poster.naturalWidth, poster.naturalHeight];
+      };
+      const video = document.createElement("video");
+      video.src = this.image;
+      video.crossOrigin = "anonymous";
+      video.muted = true;
+      video.loop = true;
+      video.playsInline = true;
+      video.setAttribute("playsinline", "");
+      video.setAttribute("muted", "");
+      video.preload = "none";
+      this.videoElement = video;
+      const onReady = () => {
+        texture.image = video;
+        texture.needsUpdate = true;
+        this.program.uniforms.uImageSizes.value = [video.videoWidth, video.videoHeight];
+      };
+      video.addEventListener("loadeddata", onReady);
+    } else {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.src = this.image;
+      img.onload = () => {
+        texture.image = img;
+        this.program.uniforms.uImageSizes.value = [img.naturalWidth, img.naturalHeight];
+      };
+    }
   }
 
   createMesh() {
@@ -377,6 +416,7 @@ class Media {
   }
 
   createTitle() {
+    if (!this.text) return;
     new Title({
       gl: this.gl,
       plane: this.plane,
@@ -386,7 +426,22 @@ class Media {
     });
   }
 
+  togglePlay() {
+    if (!this.videoElement) return;
+    const video = this.videoElement;
+    if (video.paused) {
+      if (video.readyState === 0) video.load();
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
+  }
+
   update(scroll: { current: number; last: number }, direction: "right" | "left", mouse?: { x: number; y: number } | null) {
+    if (this.videoTexture) {
+      this.videoTexture.needsUpdate = true;
+      this.videoTexture.update();
+    }
     this.plane.position.x = this.x - scroll.current - this.extra;
 
     const x = this.plane.position.x;
@@ -410,20 +465,29 @@ class Media {
       }
     }
 
-    if (mouse) {
-      const distX = Math.abs(x - mouse.x);
-      const distY = Math.abs(this.plane.position.y - mouse.y);
-      const targetLift =
-        Math.max(0, 1 - distX / (this.width * 0.75)) *
-        Math.max(0, 1 - distY / (this.viewport.height * 0.4)) *
-        0.6;
-      this.lift = lerp(this.lift, targetLift, 0.12);
-      if (this.lift > 0.001) {
-        this.plane.position.y += -this.lift * this.plane.scale.y * 0.18;
-      }
-    } else {
-      this.lift = lerp(this.lift, 0, 0.12);
-    }
+    const hovered =
+      !!mouse &&
+      Math.abs(x - mouse.x) < this.plane.scale.x / 2 &&
+      Math.abs(this.plane.position.y - mouse.y) < this.plane.scale.y / 2;
+    if (hovered) this.lastHoverTime = performance.now();
+    const active = hovered || performance.now() - this.lastHoverTime < 200;
+
+    const stiffness = 400;
+    const damping = 17;
+    const now = performance.now();
+    const h = Math.min((now - (this.lastFrameTime || now)) / 1000, 0.05);
+    this.lastFrameTime = now;
+    const targetScale = active ? 1.1 : 1;
+    const targetY = active ? -0.2 : 0;
+    let accel = stiffness * (targetScale - this.hoverScale) - damping * this.hoverScaleVel;
+    this.hoverScaleVel += accel * h;
+    this.hoverScale += this.hoverScaleVel * h;
+    accel = stiffness * (targetY - this.hoverY) - damping * this.hoverYVel;
+    this.hoverYVel += accel * h;
+    this.hoverY += this.hoverYVel * h;
+
+    this.plane.scale.set(this.baseScaleX * this.hoverScale, this.baseScaleY * this.hoverScale, 1);
+    this.plane.position.y += this.hoverY;
 
     const planeOffset = this.plane.scale.x / 2;
     const viewportOffset = this.viewport.width / 2;
@@ -443,8 +507,10 @@ class Media {
     if (screen) this.screen = screen;
     if (viewport) this.viewport = viewport;
     this.scale = this.screen.height / 1500;
-    this.plane.scale.y = (this.viewport.height * (900 * this.scale)) / this.screen.height;
-    this.plane.scale.x = (this.viewport.width * (700 * this.scale)) / this.screen.width;
+    this.plane.scale.y = (this.viewport.height * (1000 * this.scale)) / this.screen.height;
+    this.plane.scale.x = this.plane.scale.y * (1080 / 1440);
+    this.baseScaleX = this.plane.scale.x;
+    this.baseScaleY = this.plane.scale.y;
     this.plane.program.uniforms.uPlaneSizes.value = [this.plane.scale.x, this.plane.scale.y];
     this.padding = 2;
     this.width = this.plane.scale.x + this.padding;
@@ -494,9 +560,11 @@ class App {
   boundOnTouchMove!: (e: MouseEvent | TouchEvent) => void;
   boundOnTouchUp!: () => void;
   boundOnKeyDown!: (e: KeyboardEvent) => void;
+  boundOnClick!: (e: MouseEvent) => void;
 
   isDown: boolean = false;
   start: number = 0;
+  wasDragging: boolean = false;
   mouse: { x: number; y: number } | null = null;
   autoPlay: boolean;
   autoSpeed: number;
@@ -556,8 +624,8 @@ class App {
 
   createGeometry() {
     this.planeGeometry = new Plane(this.gl, {
-      heightSegments: 50,
-      widthSegments: 100
+      heightSegments: 24,
+      widthSegments: 48
     });
   }
 
@@ -590,6 +658,7 @@ class App {
 
   onTouchDown(e: MouseEvent | TouchEvent) {
     this.isDown = true;
+    this.wasDragging = false;
     this.scroll.position = this.scroll.current;
     this.start = "touches" in e ? e.touches[0].clientX : e.clientX;
   }
@@ -597,6 +666,7 @@ class App {
   onTouchMove(e: MouseEvent | TouchEvent) {
     if (!this.isDown) return;
     const x = "touches" in e ? e.touches[0].clientX : e.clientX;
+    if (Math.abs(this.start - x) > 8) this.wasDragging = true;
     const distance = (this.start - x) * (this.scrollSpeed * 0.025);
     this.scroll.target = (this.scroll.position ?? 0) + distance;
   }
@@ -647,6 +717,25 @@ class App {
     this.scroll.target = this.scroll.target < 0 ? -item : item;
   }
 
+  onClick(e: MouseEvent) {
+    if (this.wasDragging) return;
+    const rect = this.container.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * this.viewport.width;
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * this.viewport.height;
+    for (const media of this.medias) {
+      if (!media.isVideo) continue;
+      const px = media.plane.position.x;
+      if (
+        Math.abs(px - x) < media.plane.scale.x / 2 &&
+        Math.abs(media.plane.position.y - y) < media.plane.scale.y / 2
+      ) {
+        media.togglePlay();
+        return;
+      }
+    }
+  }
+
   onResize() {
     this.screen = {
       width: this.container.clientWidth,
@@ -687,6 +776,7 @@ class App {
     this.boundOnTouchMove = this.onTouchMove.bind(this);
     this.boundOnTouchUp = this.onTouchUp.bind(this);
     this.boundOnKeyDown = this.onKeyDown.bind(this);
+    this.boundOnClick = this.onClick.bind(this);
 
     window.addEventListener("resize", this.boundOnResize);
     window.addEventListener("mousewheel", this.boundOnWheel);
@@ -695,6 +785,7 @@ class App {
     window.addEventListener("mousedown", this.boundOnTouchDown);
     window.addEventListener("mousemove", this.boundOnTouchMove);
     window.addEventListener("mouseup", this.boundOnTouchUp);
+    window.addEventListener("click", this.boundOnClick);
     window.addEventListener("touchstart", this.boundOnTouchDown);
     window.addEventListener("touchmove", this.boundOnTouchMove);
     window.addEventListener("touchend", this.boundOnTouchUp);
@@ -718,6 +809,7 @@ class App {
     window.removeEventListener("touchstart", this.boundOnTouchDown);
     window.removeEventListener("touchmove", this.boundOnTouchMove);
     window.removeEventListener("touchend", this.boundOnTouchUp);
+    window.removeEventListener("click", this.boundOnClick);
     if (this.renderer && this.renderer.gl && this.renderer.gl.canvas.parentNode) {
       this.renderer.gl.canvas.parentNode.removeChild(this.renderer.gl.canvas as HTMLCanvasElement);
     }
