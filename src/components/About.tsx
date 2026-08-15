@@ -50,7 +50,18 @@ export default function About() {
         <div className="flex flex-col justify-center gap-8">
           <MotionReveal delay={0.15}>
             <p className="text-lg leading-relaxed text-muted">
-              {profile.description}
+              {profile.description.map((segment, i) =>
+                segment.bold ? (
+                  <strong
+                    key={i}
+                    className="font-semibold text-foreground"
+                  >
+                    {segment.text}
+                  </strong>
+                ) : (
+                  <span key={i}>{segment.text}</span>
+                ),
+              )}
             </p>
           </MotionReveal>
 

@@ -7,7 +7,7 @@ import Section from "./Section";
 
 const items = works.map((work) => ({
   image: work.media,
-  text: "",
+  text: work.label,
 }));
 
 export default function Projects() {
@@ -32,7 +32,8 @@ export default function Projects() {
             scrollEase={0.05}
             autoSpeed={0.05}
             itemScale={0.7}
-            font="bold 30px sans-serif"
+            font="bold 30px Inter"
+            fontUrl="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
             />
             <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-[linear-gradient(to_right,rgba(255,255,255,1)_0%,rgba(255,255,255,0.9)_40%,rgba(255,255,255,0)_100%)] md:w-48" />
             <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-[linear-gradient(to_left,rgba(255,255,255,1)_0%,rgba(255,255,255,0.9)_40%,rgba(255,255,255,0)_100%)] md:w-48" />

@@ -4,8 +4,18 @@ export const profile = {
   role: "Video Editor",
   title: "Portfolio 2026 | Video Editor",
   location: "Saint Vincent and the Grenadines",
-  description:
-    "Self-taught video editor with 5+ years of experience creating content that grabs attention from the very first second. I specialize in video editing, motion graphics and design — mastering Premiere Pro, After Effects, Photoshop and Blender to take every project from concept to final result. My focus: pacing, storytelling and details that make the difference.",
+  description: [
+    {
+      text: "Self-taught video editor with 4+ years of experience creating content that grabs attention from the very first second. ",
+    },
+    {
+      text: "I specialize in video editing, motion graphics and 3d animation — mastering Premiere Pro, After Effects, Photoshop and Blender",
+      bold: true,
+    },
+    {
+      text: " to take every project from concept to final result. My focus: pacing, storytelling and details that make the difference.",
+    },
+  ],
   email: "frankssleyva@gmail.com",
   instagram: "@frank_editions",
   instagramUrl: "https://www.instagram.com/frank_editions/",
@@ -131,6 +141,7 @@ export type Works = {
   media: string;
   type: "video" | "image";
   color: string;
+  label: string;
 };
 
 export const works: Works[] = [
@@ -142,6 +153,7 @@ export const works: Works[] = [
     media: "/works/projects-1.mp4",
     type: "video",
     color: "#7c3aed",
+    label: "Melisa Medel",
   },
   {
     id: "reel-1",
@@ -150,6 +162,7 @@ export const works: Works[] = [
     media: "/works/projects-2.mp4",
     type: "video",
     color: "#f59e0b",
+    label: "Motion Graphic",
   },
   {
     id: "reel-2",
@@ -158,6 +171,7 @@ export const works: Works[] = [
     media: "/works/projects-3.mp4",
     type: "video",
     color: "#0891b2",
+    label: "Keyes Company",
   },
   {
     id: "reel-3",
@@ -166,6 +180,7 @@ export const works: Works[] = [
     media: "/works/projects-4.mp4",
     type: "video",
     color: "#7c3aed",
+    label: "Keyes Web",
   },
   {
     id: "reel-4",
@@ -174,6 +189,7 @@ export const works: Works[] = [
     media: "/works/projects-5.mp4",
     type: "video",
     color: "#f59e0b",
+    label: "LA The Builder",
   },
   {
     id: "socal-dumpsters",
@@ -183,6 +199,7 @@ export const works: Works[] = [
     media: "/works/projects-6.mp4",
     type: "video",
     color: "#0891b2",
+    label: "SoCal Dumpsters",
   },
   {
     id: "keyes-case-study",
@@ -192,6 +209,7 @@ export const works: Works[] = [
     media: "/works/projects-7.mp4",
     type: "video",
     color: "#7c3aed",
+    label: "3D animation",
   },
   {
     id: "keyes-case-study-2",
@@ -201,6 +219,7 @@ export const works: Works[] = [
     media: "/works/projects-8.mp4",
     type: "video",
     color: "#f59e0b",
+    label: "Motion Graphic",
   },
 ];
 

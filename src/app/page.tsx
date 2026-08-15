@@ -31,7 +31,7 @@ export default function Home() {
               Frank Editions
             </span>
           </div>
-          <p>Editing · Graphic Design · Motion Graphics</p>
+          <p>Editing · 3D Animation · Motion Graphics</p>
         </div>
       </footer>
     </div>
